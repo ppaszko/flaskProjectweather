@@ -4,13 +4,10 @@ import os
 import requester
 import schedule
 
-def job():
-    print("I'm working...")
-    print(time.strftime("%A, %d. %B %Y %I:%M:%S %p"))
-    os.system("/home/paszko/PycharmProjects/flaskProject/requester.py")
 
 
-schedule.every(10).seconds.do(job)
+
+schedule.every(30).minutes.do(requester.all_request)
 
 
 while True:

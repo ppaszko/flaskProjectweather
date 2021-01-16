@@ -2,12 +2,13 @@ import time
 
 import requests
 import json
-import os
-import requester
-import schedule
 
-def job():
-    airports=['epkt', 'epkk', 'epwa', 'epwr', 'epgd', 'eprz', 'eppo']
+
+from app import Airport
+
+
+def all_request():
+    airports=[T.name for T in Airport.query.all()]
 
 
     def request(airport):
@@ -18,72 +19,36 @@ def job():
             req.raise_for_status()
             resp = json.loads(req.text)
             print(resp)
-            try:
-                weather={
-                    'airport:': resp["data"][0]["station"]["name"],
-                    'category:': resp["data"][0]["flight_category"],
-                    'conditions:': resp["data"][0]["conditions"][0]["text"],
-                    'datetime:': resp["data"][0]["observed"],
-                    'temperature:': resp["data"][0]["temperature"]["celsius"],
-                    'wind_degrees:': resp["data"][0]["wind"]["degrees"],
-                    'wind_speed:': resp["data"][0]["wind"]["speed_kph"],
-                    'dewpoint:': resp["data"][0]["dewpoint"]["celsius"],
-                    'humidity:': resp["data"][0]["humidity"]["percent"],
-                    'pressure:': resp["data"][0]["barometer"]["hpa"],
-                    'visibility:': resp["data"][0]["visibility"]["meters_float"],
-                    'ceiling:': resp["data"][0]["ceiling"]["text"],
-                    'ceiling_level:': resp["data"][0]["ceiling"]["meters"],
-                    'clouds1:': resp["data"][0]["clouds"][0]["text"],
-                    'clouds1_level:': resp["data"][0]["clouds"][0]["meters"],
-                }
-            except (KeyError,IndexError) as e:
-                try:
-                    weather = {
-                        'airport:': resp["data"][0]["station"]["name"],
-                        'category:': resp["data"][0]["flight_category"],
-                        'datetime:': resp["data"][0]["observed"],
-                        'temperature:': resp["data"][0]["temperature"]["celsius"],
-                        'wind_degrees:': resp["data"][0]["wind"]["degrees"],
-                        'wind_speed:': resp["data"][0]["wind"]["speed_kph"],
-                        'dewpoint:': resp["data"][0]["dewpoint"]["celsius"],
-                        'humidity:': resp["data"][0]["humidity"]["percent"],
-                        'pressure:': resp["data"][0]["barometer"]["hpa"],
-                        'visibility:': resp["data"][0]["visibility"]["meters_float"],
-                        'ceiling:': resp["data"][0]["ceiling"]["text"],
-                        'ceiling_level:': resp["data"][0]["ceiling"]["meters"],
-                        'clouds1:': resp["data"][0]["clouds"][0]["text"],
-                        'clouds1_level:': resp["data"][0]["clouds"][0]["meters"],
-                    }
-                except (KeyError,IndexError) as e:
-                    try:
-                        weather = {
-                            'airport:': resp["data"][0]["station"]["name"],
-                            'category:': resp["data"][0]["flight_category"],
-                            'datetime:': resp["data"][0]["observed"],
-                            'temperature:': resp["data"][0]["temperature"]["celsius"],
-                            'wind_degrees:': resp["data"][0]["wind"]["degrees"],
-                            'wind_speed:': resp["data"][0]["wind"]["speed_kph"],
-                            'dewpoint:': resp["data"][0]["dewpoint"]["celsius"],
-                            'humidity:': resp["data"][0]["humidity"]["percent"],
-                            'pressure:': resp["data"][0]["barometer"]["hpa"],
-                            'visibility:': resp["data"][0]["visibility"]["meters_float"],
-                            'clouds1:': resp["data"][0]["clouds"][0]["text"],
-                            'clouds1_level:': resp["data"][0]["clouds"][0]["meters"]}
-                    except (KeyError, IndexError) as e:
-                        weather = {
-                            'airport:': resp["data"][0]["station"]["name"],
-                            'category:': resp["data"][0]["flight_category"],
-                            'datetime:': resp["data"][0]["observed"],
-                            'temperature:': resp["data"][0]["temperature"]["celsius"],
-                            'wind_degrees:': resp["data"][0]["wind"]["degrees"],
-                            'wind_speed:': resp["data"][0]["wind"]["speed_kph"],
-                            'dewpoint:': resp["data"][0]["dewpoint"]["celsius"],
-                            'humidity:': resp["data"][0]["humidity"]["percent"],
-                            'pressure:': resp["data"][0]["barometer"]["hpa"],
-                            'visibility:': resp["data"][0]["visibility"]["meters_float"]
-                    }
 
-
+            weather={
+                'airport:': resp["data"][0]["station"]["name"],
+                'datetime:': resp["data"][0]["observed"]}
+            if resp["data"][0]["flight_category"]:
+                weather['category:']=resp["data"][0]["flight_category"]
+            if resp["data"][0]["temperature"]["celsius"]:
+                weather['temperature:']=resp["data"][0]["temperature"]["celsius"]
+            if resp["data"][0]["wind"]["degrees"]:
+                weather['wind_degrees:']=resp["data"][0]["wind"]["degrees"]
+            if resp["data"][0]["wind"]["speed_kph"]:
+                weather['wind_speed:']=resp["data"][0]["wind"]["speed_kph"]
+            if resp["data"][0]["dewpoint"]["celsius"]:
+                weather['dewpoint:']=resp["data"][0]["dewpoint"]["celsius"]
+            if resp["data"][0]["humidity"]["percent"]:
+                weather['humidity:']=resp["data"][0]["humidity"]["percent"]
+            if resp["data"][0]["barometer"]["hpa"]:
+                weather['pressure:']=resp["data"][0]["barometer"]["hpa"]
+            if resp["data"][0]["visibility"]["meters_float"]:
+                weather['visibility:']=resp["data"][0]["visibility"]["meters_float"]
+            if resp["data"][0]["ceiling"]["text"]:
+                weather['ceiling:']=resp["data"][0]["ceiling"]["text"]
+            if resp["data"][0]["ceiling"]["meters"]:
+                weather['ceiling_level:']=resp["data"][0]["ceiling"]["meters"]
+            if resp["data"][0]["clouds"][0]["text"]:
+                weather['clouds:']=resp["data"][0]["clouds"][0]["text"]
+            if resp["data"][0]["clouds"][0]["meters"]:
+                weather['clouds1_level:']=resp["data"][0]["clouds"][0]["meters"]
+            if resp["data"][0]["conditions"][0]["text"]:
+                weather['conditions:']=resp["data"][0]["conditions"][0]["text"]
 
             def write_json(data, filename=str(airport)+'.json'):
                 with open(filename, 'w') as f:
@@ -98,19 +63,11 @@ def job():
         except requests.exceptions.HTTPError as e:
             print(e)
 
-
-
     for airport in airports:
         try:
             request(airport)
         except IndexError:
             pass
 
+all_request()
 
-
-schedule.every(30).minutes.do(job)
-
-
-while True:
-    schedule.run_pending()
-    time.sleep(1)

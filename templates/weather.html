@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>What's the weather like?</title>
+    <title>{{ weather_data['airport:']}}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
 </head>
 
@@ -17,7 +17,7 @@
                 <h1 class="title">
                     {{ weather_data['airport:']}}
                 </h1>
-                <p>  {{ weather_data['datetime:']}}</p>
+                <p>  {{ datetime_output}}</p>
             </div>
         </div>
     </section>
@@ -30,10 +30,17 @@
     <div class="select">
 
 <select name="airport" id="airport">
-  <option value="epkt">Katowice</option>
-  <option value="epkk">Kraków</option>
-  <option value="epwa">Warszawa</option>
-  <option value="epgd">Gdańsk</option>
+
+  <script language="javascript" type="text/javascript">
+
+      var airports = {{ airports|tojson  }};
+var arrayLength = airports.length;
+
+for (var i = 0; i < arrayLength; i++)
+{
+    document.write("<option>"+airports[i]+"</option>");
+}
+</script>
 </select>
                     </div>
                      </div>
@@ -50,7 +57,7 @@
 <div class="field">
 
   <div class="control">
-    <input class="input is-info" type="text" placeholder="HH-MM" name="time">
+    <input class="input is-info" type="text" placeholder="HH:MM" name="time">
   </div>
 </div>
                       </div>
@@ -77,7 +84,7 @@
                         <article class="media">
                             <div class="media-left">
                                 <figure class="image is-50x50">
-                                    <img src="/static/images/new_plot1.png" alt="my plot">
+                                    <img src="/static/images/temperature.jpg" alt="my plot">
                                 </figure>
                             </div>
                             <div class="media-content">
@@ -97,7 +104,7 @@
                         <article class="media">
                             <div class="media-left">
                                 <figure class="image is-50x50">
-                                    <img src="/static/images/new_plot1.png" alt="my plot">
+                                    <img src="/static/images/airport-sign.png" alt="my plot">
                                 </figure>
                             </div>
                             <div class="media-content">
@@ -117,7 +124,7 @@
                         <article class="media">
                             <div class="media-left">
                                 <figure class="image is-50x50">
-                                    <img src="/static/images/new_plot1.png" alt="my plot">
+                                    <img src="/static/images/barometer.png" alt="my plot">
                                 </figure>
                             </div>
                             <div class="media-content">
@@ -188,7 +195,7 @@
                         <article class="media">
                             <div class="media-left">
                                 <figure class="image is-50x50">
-                                    <img src="/static/images/arrow2.png" alt="my plot" style="transform:rotate({{ weather_data['wind_degrees:'][-1]}}deg);">
+                                    <img src="/static/images/arrow2.png" alt="my plot" style="transform:rotate({{ weather_data['wind_degrees:']}}deg);">
                                 </figure>
                             </div>
                             <div class="media-content">
@@ -251,10 +258,17 @@
 
 
 <select name="airport2" id="airport2">
-  <option value="epkt">Katowice</option>
-  <option value="epkk">Kraków</option>
-  <option value="epwa">Warszawa</option>
-  <option value="epgd">Gdańsk</option>
+
+      <script language="javascript" type="text/javascript">
+
+      var airports = {{ airports|tojson  }};
+var arrayLength = airports.length;
+
+for (var i = 0; i < arrayLength; i++)
+{
+    document.write("<option>"+airports[i]+"</option>");
+}
+</script>
 </select>
 
 </div>
@@ -269,12 +283,12 @@
 </div>
 <div class="field">
   <div class="control">
-    <input class="input is-info" type="text" placeholder="HH-MM start" name="time1_start">
+    <input class="input is-info" type="text" placeholder="HH:MM start" name="time1_start">
   </div>
 </div>
                             <div class="field">
   <div class="control">
-    <input class="input is-info" type="text" placeholder="HH-MM end" name="time1_end">
+    <input class="input is-info" type="text" placeholder="HH:MM end" name="time1_end">
   </div>
 </div>
 <div class="field">
@@ -290,6 +304,26 @@
                     </div>
 </div>
          </div>
+    </section>
+        <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-offset-4 is-4">
+                    <form method="POST">
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                                <input class="input" name="new_airport" type="text" placeholder="Airport in ICAO code">
+                            </div>
+                            <div class="control">
+                                <button class="button is-info">
+                                    Add Airport
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </section>
 
 
