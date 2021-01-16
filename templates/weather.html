@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>What's the weather like?</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+</head>
+
+<body>
+
+    <section class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Wheather in
+                </h1>
+                <p>{{ weather_data['airport:'][-1]}}  {{ weather_data['datetime:'][-1]}}</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="select">
+<form method="POST">
+<label for="cars">Choose a car:</label>
+
+<select name="airport" id="airport">
+  <option value="epkt">Katowice</option>
+  <option value="epkk">Kraków</option>
+  <option value="epwa">Warszawa</option>
+  <option value="epgd">Gdańsk</option>
+</select>
+    <input class="button" type="submit" value="Show data">
+</form>
+</div>
+
+
+    <section class="section">
+        <div class="container">
+            <div class="columns is-2">
+                <div class="column">
+                    <div class="box">
+                        <article class="media">
+                            <div class="media-left">
+                                <figure class="image is-50x50">
+                                    <img src="/static/images/new_plot1.png" alt="my plot">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <span class="title">Temperature</span>
+                                        <br>
+                                        <span class="subtitle">{{weather_data['temperature:'][-1]  }} C</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    </div>
+                <div class="column">
+                    <div class="box">
+                        <article class="media">
+                            <div class="media-left">
+                                <figure class="image is-50x50">
+                                    <img src="/static/images/new_plot1.png" alt="my plot">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <span class="title">Conditions</span>
+                                        <br>
+                                        <span class="subtitle">{{weather_data['conditions:'][-1]  }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    </div>
+                    <div class="column">
+                                    <div class="box">
+                        <article class="media">
+                            <div class="media-left">
+                                <figure class="image is-50x50">
+                                    <img src="/static/images/new_plot1.png" alt="my plot">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <span class="title">Pressure</span>
+                                        <br>
+                                        <span class="subtitle">{{weather_data['pressure:'][-1]  }} hPa</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                </div>
+                </div>
+
+
+            </div>
+
+    </section> <!-- 3boxes with info-->
+
+
+
+        <section class="section"> <!-- ceiling and wind-->
+        <div class="container">
+            <div class="columns is-2">
+                <div class="column">
+                    <div class="box">
+                        <article class="media">
+                            <div class="media-left">
+                                <figure class="image">
+                                    <img src="{{ceiling_image}}" alt="my plot">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <span class="title">Ceiling level</span>
+                                        <br>
+                                        <span class="subtitle">{{ weather_data['ceiling_level:'][-1]}} metres</span>
+                                        <br>
+                                        <br>
+                                        <span class="title">Ceiling type</span>
+                                        <br>
+                                        <span class="subtitle">{{ weather_data['ceiling:'][-1]}}</span>
+                                        <br>
+                                        <br>
+                                        <span class="title">Clouds level</span>
+                                        <br>
+                                        <span class="subtitle">{{ weather_data['clouds1_level:'][-1]}} metres</span>
+                                        <br>
+                                        <br>
+                                        <span class="title">Clouds tupe</span>
+                                        <br>
+                                        <span class="subtitle">{{ weather_data['clouds1:'][-1]}}</span>
+                                        <br>
+
+
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    </div>
+                <div class="column">
+                    <div class="box">
+                        <article class="media">
+                            <div class="media-left">
+                                <figure class="image is-50x50">
+                                    <img src="/static/images/arrow2.png" alt="my plot" style="transform:rotate({{ weather_data['wind_degrees:'][-1]}}deg);">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <span class="title">Wind</span>
+                                        <br>
+                                        <span class="subtitle">Wind direction</span>
+                                        <br>
+                                        <span class="subtitle">{{ weather_data['wind_degrees:'][-1]}}</span>
+                                        <br>
+                                        <span class="subtitle">Wind speed</span>
+                                        <br>
+                                        <span class="subtitle">{{ weather_data['wind_speed:'][-1]}}</span>
+                                        <br>
+                                        <span class="subtitle">Visibility</span>
+                                        <br>
+                                        <span class="subtitle">{{ weather_data['visibility:'][-1]}}</span>
+                                        <br>
+                                        <span class="subtitle">Dewpoint</span>
+                                        <br>
+                                        <span class="subtitle">{{ weather_data['dewpoint:'][-1]}}</span>
+                                        <br>
+                                        <span class="subtitle">humidity</span>
+                                        <br>
+                                        <span class="subtitle">{{ weather_data['humidity:'][-1]}}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+    </section>
+
+
+     <section class="section"> <!-- 2 lat wykresy-->
+
+        <div class="container">
+            <div class="columns">
+                    <div class="column">
+                    <div class="box">
+                        <article class="media">
+                            <div class="media">
+                                <figure class="image">
+                                    <img src="{{custom_plot1}}" alt="my plot">
+                                </figure>
+                            </div>
+                        </article>
+                        <form method="POST">
+                        <div class="field">
+
+      <div class="select">
+
+<label for="cars">Choose a car:</label>
+
+<select name="airport2" id="airport">
+  <option value="epkt">Katowice</option>
+  <option value="epkk">Kraków</option>
+  <option value="epwa">Warszawa</option>
+  <option value="epgd">Gdańsk</option>
+</select>
+
+</div>
+<br>
+                            <br>
+
+  <div class="control">
+      <label>
+          <input class="input is-info" type="text" placeholder="YYYY-MM-DD" name="day1">
+      </label>
+  </div>
+</div>
+<div class="field">
+  <div class="control">
+    <input class="input is-info" type="text" placeholder="HH-MM start" name="time1_start">
+  </div>
+</div>
+                            <div class="field">
+  <div class="control">
+    <input class="input is-info" type="text" placeholder="HH-MM end" name="time1_end">
+  </div>
+</div>
+<div class="field">
+  <div class="control">
+    <input class="input is-info" type="text" placeholder="Parameter" name="parameter1">
+  </div>
+</div>
+                        <input class="button" type="submit" value="Show data">
+                            </form>
+                        </div>
+
+
+                    </div>
+</div>
+         </div>
+    </section>
+
+
+    <footer class="footer">
+    </footer>
+</body>
+
+</html>
