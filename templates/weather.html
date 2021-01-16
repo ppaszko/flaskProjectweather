@@ -15,16 +15,19 @@
         <div class="hero-body">
             <div class="container">
                 <h1 class="title">
-                    Wheather in
+                    {{ weather_data['airport:']}}
                 </h1>
-                <p>{{ weather_data['airport:'][-1]}}  {{ weather_data['datetime:'][-1]}}</p>
+                <p>  {{ weather_data['datetime:']}}</p>
             </div>
         </div>
     </section>
 
+    <section class="section">
+        <div class="container">
+            <form method="POST">
+            <div class="columns ">
+                <div class="column is-one-fifth">
     <div class="select">
-<form method="POST">
-<label for="cars">Choose a car:</label>
 
 <select name="airport" id="airport">
   <option value="epkt">Katowice</option>
@@ -32,9 +35,38 @@
   <option value="epwa">Warszawa</option>
   <option value="epgd">Gdańsk</option>
 </select>
+                    </div>
+                     </div>
+                <div class="column">
+                    <div class="field">
+      <div class="control">
+      <label>
+          <input class="input is-info" type="text" placeholder="YYYY-MM-DD" name="day">
+      </label>
+  </div>
+                        </div>
+                      </div>
+                <div class="column">
+<div class="field">
+
+  <div class="control">
+    <input class="input is-info" type="text" placeholder="HH-MM" name="time">
+  </div>
+</div>
+                      </div>
+              </div>
+                                <div class="column">
+                    <div class="field">
     <input class="button" type="submit" value="Show data">
+</div>
+                    </div>
+
+
 </form>
 </div>
+
+</section>
+
 
 
     <section class="section">
@@ -53,7 +85,7 @@
                                     <p>
                                         <span class="title">Temperature</span>
                                         <br>
-                                        <span class="subtitle">{{weather_data['temperature:'][-1]  }} C</span>
+                                        <span class="subtitle">{{weather_data['temperature:']  }} C</span>
                                     </p>
                                 </div>
                             </div>
@@ -73,7 +105,7 @@
                                     <p>
                                         <span class="title">Conditions</span>
                                         <br>
-                                        <span class="subtitle">{{weather_data['conditions:'][-1]  }}</span>
+                                        <span class="subtitle">{{weather_data['conditions:']  }}</span>
                                     </p>
                                 </div>
                             </div>
@@ -93,7 +125,7 @@
                                     <p>
                                         <span class="title">Pressure</span>
                                         <br>
-                                        <span class="subtitle">{{weather_data['pressure:'][-1]  }} hPa</span>
+                                        <span class="subtitle">{{weather_data['pressure:']  }} hPa</span>
                                     </p>
                                 </div>
                             </div>
@@ -126,22 +158,22 @@
                                     <p>
                                         <span class="title">Ceiling level</span>
                                         <br>
-                                        <span class="subtitle">{{ weather_data['ceiling_level:'][-1]}} metres</span>
+                                        <span class="subtitle">{{ weather_data['ceiling_level:']}} metres</span>
                                         <br>
                                         <br>
                                         <span class="title">Ceiling type</span>
                                         <br>
-                                        <span class="subtitle">{{ weather_data['ceiling:'][-1]}}</span>
+                                        <span class="subtitle">{{ weather_data['ceiling:']}}</span>
                                         <br>
                                         <br>
                                         <span class="title">Clouds level</span>
                                         <br>
-                                        <span class="subtitle">{{ weather_data['clouds1_level:'][-1]}} metres</span>
+                                        <span class="subtitle">{{ weather_data['clouds1_level:']}} metres</span>
                                         <br>
                                         <br>
                                         <span class="title">Clouds tupe</span>
                                         <br>
-                                        <span class="subtitle">{{ weather_data['clouds1:'][-1]}}</span>
+                                        <span class="subtitle">{{ weather_data['clouds1:']}}</span>
                                         <br>
 
 
@@ -166,23 +198,23 @@
                                         <br>
                                         <span class="subtitle">Wind direction</span>
                                         <br>
-                                        <span class="subtitle">{{ weather_data['wind_degrees:'][-1]}}</span>
+                                        <span class="subtitle">{{ weather_data['wind_degrees:']}}</span>
                                         <br>
                                         <span class="subtitle">Wind speed</span>
                                         <br>
-                                        <span class="subtitle">{{ weather_data['wind_speed:'][-1]}}</span>
+                                        <span class="subtitle">{{ weather_data['wind_speed:']}}</span>
                                         <br>
                                         <span class="subtitle">Visibility</span>
                                         <br>
-                                        <span class="subtitle">{{ weather_data['visibility:'][-1]}}</span>
+                                        <span class="subtitle">{{ weather_data['visibility:']}}</span>
                                         <br>
                                         <span class="subtitle">Dewpoint</span>
                                         <br>
-                                        <span class="subtitle">{{ weather_data['dewpoint:'][-1]}}</span>
+                                        <span class="subtitle">{{ weather_data['dewpoint:']}}</span>
                                         <br>
                                         <span class="subtitle">humidity</span>
                                         <br>
-                                        <span class="subtitle">{{ weather_data['humidity:'][-1]}}</span>
+                                        <span class="subtitle">{{ weather_data['humidity:']}}</span>
                                     </p>
                                 </div>
                             </div>
@@ -216,9 +248,9 @@
 
       <div class="select">
 
-<label for="cars">Choose a car:</label>
 
-<select name="airport2" id="airport">
+
+<select name="airport2" id="airport2">
   <option value="epkt">Katowice</option>
   <option value="epkk">Kraków</option>
   <option value="epwa">Warszawa</option>

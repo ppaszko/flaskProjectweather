@@ -1,15 +1,8 @@
 import json
-from datetime import timezone
-
 import pandas as pd
-import pytz
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
-
-from visuals import draw_wth_trend
 from visuals2 import draw_ceiling_clouds, mydraw
-import datetime
-import pytz
 
 
 
@@ -32,15 +25,18 @@ flag=False
 def home():
     with open('/home/paszko/PycharmProjects/flaskProject/epkt.json') as f:
         data = pd.DataFrame(json.load(f)['airport_info'])
-    data.drop_duplicates(subset="datetime:",
+    data=data.drop_duplicates(subset="datetime:",
                          keep='first')
     data.index = pd.to_datetime(data['datetime:'], )
     weather_data = data
-    image_name = draw_ceiling_clouds(weather_data)
+    image_name = draw_ceiling_clouds(weather_data, None)
     custom_plot1 = 'static/images/fig21.png'
     print('kuźwa')
-    return render_template('weather.html', weather_data=weather_data, ceiling_image=image_name,
+    selected_weather = weather_data.iloc[-1]
+
+    return render_template('weather.html', weather_data=selected_weather, ceiling_image=image_name,
                            custom_plot1=custom_plot1)
+
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -48,34 +44,54 @@ def index():
 
     with open('/home/paszko/PycharmProjects/flaskProject/epkt.json') as f:
         data = pd.DataFrame(json.load(f)['airport_info'])
-    data.drop_duplicates(subset="datetime:",
+    data=data.drop_duplicates(subset="datetime:",
                          keep='first')
     data.index = pd.to_datetime(data['datetime:'], )
     weather_data = data
-    image_name = draw_ceiling_clouds(weather_data)
+    image_name = draw_ceiling_clouds(weather_data, None)
     custom_plot1 = 'static/images/fig21.png'
+    selected_weather = weather_data.iloc[-1]
 
     if request.method == 'POST':
+
         if 'airport' in request.form:
             hehe = request.form['airport']
+            if request.form['day'] != '':
+                day =request.form['day']
+                time=request.form['time']
+                time = str(day) + 'T' + str(time) + ':00.000Z'
+                print(time)
+            else:
+                time=None
             print('lujjj')
+
             with open('/home/paszko/PycharmProjects/flaskProject/'+ str(hehe) + '.json') as f:
                 data = pd.DataFrame(json.load(f)['airport_info'])
-            data.drop_duplicates(subset="datetime:",
+            data=data.drop_duplicates(subset="datetime:",
                                  keep='first')
             data.index = pd.to_datetime(data['datetime:'], )
             weather_data = data
-            image_name = draw_ceiling_clouds(weather_data)
+            if time:
+                # time = pd.to_datetime(time)
+                # print(pd.Index(data_ceiling['datetime:']))
+                luj = pd.Index(weather_data['datetime:']).get_loc(time)
+                # print(luj)
+            else:
+                luj = -1
+
+            selected_weather=weather_data.iloc[luj]
+            print(selected_weather)
+            image_name = draw_ceiling_clouds(weather_data, time)
 
         if 'day1' in request.form:
             hehe = request.form['airport2']
             with open('/home/paszko/PycharmProjects/flaskProject/'+ str(hehe) + '.json') as f:
                 data = pd.DataFrame(json.load(f)['airport_info'])
-            data.drop_duplicates(subset="datetime:",
+            data=data.drop_duplicates(subset="datetime:",
                                  keep='first')
             data.index = pd.to_datetime(data['datetime:'], )
             weather_data = data
-            image_name = draw_ceiling_clouds(weather_data)
+            image_name = draw_ceiling_clouds(weather_data, None)
             day1=request.form['day1']
             time1_start=request.form['time1_start']
             time1_end = request.form['time1_end']
@@ -83,18 +99,10 @@ def index():
             start1 = str(day1) + 'T' + str(time1_start) + ':00.000Z'
             end1 = str(day1) + 'T' + str(time1_end) + ':00.000Z'
             custom_plot1 = mydraw(weather_data,parameter1,start1,end1)
-            #timezone.utc()
-            #print(datetime1)
-            #print(weather_data[weather_data['datetime:'] == datetime1][parameter1])
-
-        if 'day2' in request.form:
-            day2 = request.form['day2']
-            time2_start=request.form['time2_start']
-            time2_end = request.form['time2_end']
-            parameter2 = request.form['parameter2']
 
 
-    return render_template('weather.html', weather_data=weather_data, ceiling_image=image_name, custom_plot1=custom_plot1)
+
+    return render_template('weather.html', weather_data=selected_weather, ceiling_image=image_name, custom_plot1=custom_plot1)
 
 
 """        new_city = request.form.get('city')
