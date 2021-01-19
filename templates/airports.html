@@ -61,13 +61,13 @@ for (var i = 0; i < arrayLength; i++)
   </div>
 </div>
                       </div>
-              </div>
+
                                 <div class="column">
                     <div class="field">
     <input class="button" type="submit" value="Show data">
 </div>
                     </div>
-
+</div>
 
 </form>
 </div>
@@ -163,22 +163,22 @@ for (var i = 0; i < arrayLength; i++)
                             <div class="media-content">
                                 <div class="content">
                                     <p>
-                                        <span class="title">Ceiling level</span>
+                                        <span class="title">Ceiling level:</span>
                                         <br>
                                         <span class="subtitle">{{ weather_data['ceiling_level:']}} metres</span>
                                         <br>
                                         <br>
-                                        <span class="title">Ceiling type</span>
+                                        <span class="title">Ceiling type:</span>
                                         <br>
                                         <span class="subtitle">{{ weather_data['ceiling:']}}</span>
                                         <br>
                                         <br>
-                                        <span class="title">Clouds level</span>
+                                        <span class="title">Clouds level:</span>
                                         <br>
                                         <span class="subtitle">{{ weather_data['clouds1_level:']}} metres</span>
                                         <br>
                                         <br>
-                                        <span class="title">Clouds tupe</span>
+                                        <span class="title">Clouds type:</span>
                                         <br>
                                         <span class="subtitle">{{ weather_data['clouds1:']}}</span>
                                         <br>
@@ -201,27 +201,24 @@ for (var i = 0; i < arrayLength; i++)
                             <div class="media-content">
                                 <div class="content">
                                     <p>
-                                        <span class="title">Wind</span>
+                                        <span class="title">Wind:</span>
                                         <br>
-                                        <span class="subtitle">Wind direction</span>
+                                        <span class="subtitle">Wind direction: {{ weather_data['wind_degrees:']}}</span>
+
                                         <br>
-                                        <span class="subtitle">{{ weather_data['wind_degrees:']}}</span>
+                                        <span class="subtitle">Wind speed: {{ weather_data['wind_speed:']}}</span>
+
                                         <br>
-                                        <span class="subtitle">Wind speed</span>
                                         <br>
-                                        <span class="subtitle">{{ weather_data['wind_speed:']}}</span>
+                                        <span class="title">Other parameters:</span>
                                         <br>
-                                        <span class="subtitle">Visibility</span>
+                                        <span class="subtitle">Visibility: {{ weather_data['visibility:']}}</span>
                                         <br>
-                                        <span class="subtitle">{{ weather_data['visibility:']}}</span>
+                                        <span class="subtitle">Dewpoint: {{ weather_data['dewpoint:']}}</span>
                                         <br>
-                                        <span class="subtitle">Dewpoint</span>
+                                        <span class="subtitle">Humidity: {{ weather_data['humidity:']}}</span>
                                         <br>
-                                        <span class="subtitle">{{ weather_data['dewpoint:']}}</span>
-                                        <br>
-                                        <span class="subtitle">humidity</span>
-                                        <br>
-                                        <span class="subtitle">{{ weather_data['humidity:']}}</span>
+
                                     </p>
                                 </div>
                             </div>
@@ -312,7 +309,7 @@ for (var i = 0; i < arrayLength; i++)
                     <form method="POST">
                         <div class="field has-addons">
                             <div class="control is-expanded">
-                                <input class="input" name="new_airport" type="text" placeholder="Airport in ICAO code">
+                                <input class="input" name="new_airport" type="text" placeholder="Airport ICAO code">
                             </div>
                             <div class="control">
                                 <button class="button is-info">

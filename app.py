@@ -1,63 +1,52 @@
 import json
-
 import pandas as pd
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import sessionmaker
-
-
-from utils import json_default, json_during, data_first
-from visuals2 import draw_ceiling_clouds, mydraw
-
+from utils import json_default, data_load
+from visualization import draw_ceiling_clouds, mydraw
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///weather.db'
-
 db = SQLAlchemy(app)
 
-
 class Airport(db.Model):
+    """Database Airport class"""
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False, unique=True)
 
-
-
-
-
 @app.route('/')
 def home():
+    """First run of airports.html."""
     selected_weather, image_name, custom_plot1, datetime_output = json_default()
     airports = [T.name for T in Airport.query.all()]
     print(airports)
-
-    return render_template('weather.html', weather_data=selected_weather, ceiling_image=image_name,
+    return render_template('airports.html', weather_data=selected_weather, ceiling_image=image_name,
                            custom_plot1=custom_plot1, datetime_output=datetime_output, airports=airports)
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    """Main usage of airports.html"""
     selected_weather, image_name, custom_plot1, datetime_output = json_default()
     airports = [T.name for T in Airport.query.all()]
-
 
     if request.method == 'POST':
         new_airport = request.form.get('new_airport')
         if new_airport:
+            """New airport procedure"""
             new_city_obj = Airport(name=new_airport)
-
             db.session.add(new_city_obj)
             db.session.commit()
             airports = [T.name for T in Airport.query.all()]
-
             with open('default.json', 'r') as f:
                 data = json.load(f)
-            with open(str(new_airport)+'.json', 'w') as file:
+            with open(str(new_airport) + '.json', 'w') as file:
                 json.dump(data, file, indent=4)
-
             from requester import all_request
             all_request()
 
         if 'airport' in request.form:
+            """Upper input fields"""
             icao_code = request.form['airport']
             if request.form['day'] != '':
                 day = request.form['day']
@@ -65,7 +54,7 @@ def index():
                 time = str(day) + 'T' + str(time) + ':00.000Z'
             else:
                 time = None
-            weather_data = data_first(icao_code)
+            weather_data = data_load(icao_code)
             if time:
                 luj = pd.Index(weather_data['datetime:']).get_loc(time)
             else:
@@ -76,8 +65,9 @@ def index():
             image_name = draw_ceiling_clouds(weather_data, time)
 
         if 'day1' in request.form:
+            """Bottom input fields"""
             icao_code = request.form['airport2']
-            weather_data = data_first(icao_code)
+            weather_data = data_load(icao_code)
             if request.form['day1'] != '':
                 day = request.form['day1']
                 time = request.form['time1_end']
@@ -99,19 +89,5 @@ def index():
             end1 = str(day1) + 'T' + str(time1_end) + ':00.000Z'
             custom_plot1 = mydraw(weather_data, parameter1, start1, end1)
 
-    return render_template('weather.html', weather_data=selected_weather, ceiling_image=image_name,
+    return render_template('airports.html', weather_data=selected_weather, ceiling_image=image_name,
                            custom_plot1=custom_plot1, datetime_output=datetime_output, airports=airports)
-
-
-"""        new_city = request.form.get('city')
-
-        if new_city:
-            new_city_obj = City(name=new_city)
-
-            db.session.add(new_city_obj)
-            db.session.commit()"""
-
-
-
-# url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=271d1234d3f497eed5b1d80a07b3fcd1'
-# url ='https://danepubliczne.imgw.pl/api/data/synop/station/krakow'
