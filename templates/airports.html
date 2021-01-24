@@ -5,327 +5,322 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ weather_data['airport:']}}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+    <title>{{ weather_data['airport:'] }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css"/>
 </head>
 
 <body>
-
-    <section class="hero is-primary">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title">
-                    {{ weather_data['airport:']}}
-                </h1>
-                <p>  {{ datetime_output}}</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="section">
+<section class="hero is-primary">
+    <div class="hero-body">
         <div class="container">
-            <form method="POST">
+            <h1 class="title">
+                {{ weather_data['airport:'] }}
+            </h1>
+            <p>  {{ datetime_output }}</p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <form method="POST">
             <div class="columns ">
                 <div class="column is-one-fifth">
-    <div class="select">
+                    <div class="select">
 
-<select name="airport" id="airport">
+                        <select name="airport" id="airport">
 
-  <script language="javascript" type="text/javascript">
+                            <script language="javascript" type="text/javascript">
 
-      var airports = {{ airports|tojson  }};
-var arrayLength = airports.length;
+                                var airports = {{ airports|tojson  }};
+                                var arrayLength = airports.length;
 
-for (var i = 0; i < arrayLength; i++)
-{
-    document.write("<option>"+airports[i]+"</option>");
-}
-</script>
-</select>
+                                for (var i = 0; i < arrayLength; i++) {
+                                    document.write("<option>" + airports[i] + "</option>");
+                                }
+                            </script>
+                        </select>
                     </div>
-                     </div>
+                </div>
                 <div class="column">
                     <div class="field">
-      <div class="control">
-      <label>
-          <input class="input is-info" type="text" placeholder="YYYY-MM-DD" name="day">
-      </label>
-  </div>
+                        <div class="control">
+                            <label>
+                                <input class="input is-info" type="text" placeholder="YYYY-MM-DD" name="day">
+                            </label>
                         </div>
-                      </div>
-                <div class="column">
-<div class="field">
-
-  <div class="control">
-    <input class="input is-info" type="text" placeholder="HH:MM" name="time">
-  </div>
-</div>
-                      </div>
-
-                                <div class="column">
-                    <div class="field">
-    <input class="button" type="submit" value="Show data">
-</div>
                     </div>
-</div>
+                </div>
+                <div class="column">
+                    <div class="field">
 
-</form>
-</div>
+                        <div class="control">
+                            <input class="input is-info" type="text" placeholder="HH:MM" name="time">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="field">
+                        <input class="button" type="submit" value="Show data">
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
 
 </section>
 
 
-
-    <section class="section">
-        <div class="container">
-            <div class="columns is-2">
-                <div class="column">
-                    <div class="box">
-                        <article class="media">
-                            <div class="media-left">
-                                <figure class="image is-50x50">
-                                    <img src="/static/images/temperature.jpg" alt="my plot">
-                                </figure>
-                            </div>
-                            <div class="media-content">
-                                <div class="content">
-                                    <p>
-                                        <span class="title">Temperature</span>
-                                        <br>
-                                        <span class="subtitle">{{weather_data['temperature:']  }} C</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                    </div>
-                <div class="column">
-                    <div class="box">
-                        <article class="media">
-                            <div class="media-left">
-                                <figure class="image is-50x50">
-                                    <img src="/static/images/airport-sign.png" alt="my plot">
-                                </figure>
-                            </div>
-                            <div class="media-content">
-                                <div class="content">
-                                    <p>
-                                        <span class="title">Conditions</span>
-                                        <br>
-                                        <span class="subtitle">{{weather_data['conditions:']  }}</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                    </div>
-                    <div class="column">
-                                    <div class="box">
-                        <article class="media">
-                            <div class="media-left">
-                                <figure class="image is-50x50">
-                                    <img src="/static/images/barometer.png" alt="my plot">
-                                </figure>
-                            </div>
-                            <div class="media-content">
-                                <div class="content">
-                                    <p>
-                                        <span class="title">Pressure</span>
-                                        <br>
-                                        <span class="subtitle">{{weather_data['pressure:']  }} hPa</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-
-                </div>
-                </div>
-
-
-            </div>
-
-    </section> <!-- 3boxes with info-->
-
-
-
-        <section class="section"> <!-- ceiling and wind-->
-        <div class="container">
-            <div class="columns is-2">
-                <div class="column">
-                    <div class="box">
-                        <article class="media">
-                            <div class="media-left">
-                                <figure class="image">
-                                    <img src="{{ceiling_image}}" alt="my plot">
-                                </figure>
-                            </div>
-                            <div class="media-content">
-                                <div class="content">
-                                    <p>
-                                        <span class="title">Ceiling level:</span>
-                                        <br>
-                                        <span class="subtitle">{{ weather_data['ceiling_level:']}} metres</span>
-                                        <br>
-                                        <br>
-                                        <span class="title">Ceiling type:</span>
-                                        <br>
-                                        <span class="subtitle">{{ weather_data['ceiling:']}}</span>
-                                        <br>
-                                        <br>
-                                        <span class="title">Clouds level:</span>
-                                        <br>
-                                        <span class="subtitle">{{ weather_data['clouds1_level:']}} metres</span>
-                                        <br>
-                                        <br>
-                                        <span class="title">Clouds type:</span>
-                                        <br>
-                                        <span class="subtitle">{{ weather_data['clouds1:']}}</span>
-                                        <br>
-
-
-                                    </p>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                    </div>
-                <div class="column">
-                    <div class="box">
-                        <article class="media">
-                            <div class="media-left">
-                                <figure class="image is-50x50">
-                                    <img src="/static/images/arrow2.png" alt="my plot" style="transform:rotate({{ weather_data['wind_degrees:']}}deg);">
-                                </figure>
-                            </div>
-                            <div class="media-content">
-                                <div class="content">
-                                    <p>
-                                        <span class="title">Wind:</span>
-                                        <br>
-                                        <span class="subtitle">Wind direction: {{ weather_data['wind_degrees:']}}</span>
-
-                                        <br>
-                                        <span class="subtitle">Wind speed: {{ weather_data['wind_speed:']}}</span>
-
-                                        <br>
-                                        <br>
-                                        <span class="title">Other parameters:</span>
-                                        <br>
-                                        <span class="subtitle">Visibility: {{ weather_data['visibility:']}}</span>
-                                        <br>
-                                        <span class="subtitle">Dewpoint: {{ weather_data['dewpoint:']}}</span>
-                                        <br>
-                                        <span class="subtitle">Humidity: {{ weather_data['humidity:']}}</span>
-                                        <br>
-
-                                    </p>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-
-    </section>
-
-
-     <section class="section"> <!-- 2 lat wykresy-->
-
-        <div class="container">
-            <div class="columns">
-                    <div class="column">
-                    <div class="box">
-                        <article class="media">
-                            <div class="media">
-                                <figure class="image">
-                                    <img src="{{custom_plot1}}" alt="my plot">
-                                </figure>
-                            </div>
-                        </article>
-                        <form method="POST">
-                        <div class="field">
-
-      <div class="select">
-
-
-
-<select name="airport2" id="airport2">
-
-      <script language="javascript" type="text/javascript">
-
-      var airports = {{ airports|tojson  }};
-var arrayLength = airports.length;
-
-for (var i = 0; i < arrayLength; i++)
-{
-    document.write("<option>"+airports[i]+"</option>");
-}
-</script>
-</select>
-
-</div>
-<br>
-                            <br>
-
-  <div class="control">
-      <label>
-          <input class="input is-info" type="text" placeholder="YYYY-MM-DD" name="day1">
-      </label>
-  </div>
-</div>
-<div class="field">
-  <div class="control">
-    <input class="input is-info" type="text" placeholder="HH:MM start" name="time1_start">
-  </div>
-</div>
-                            <div class="field">
-  <div class="control">
-    <input class="input is-info" type="text" placeholder="HH:MM end" name="time1_end">
-  </div>
-</div>
-<div class="field">
-  <div class="control">
-    <input class="input is-info" type="text" placeholder="Parameter" name="parameter1">
-  </div>
-</div>
-                        <input class="button" type="submit" value="Show data">
-                            </form>
+<section class="section">
+    <div class="container">
+        <div class="columns is-2">
+            <div class="column">
+                <div class="box">
+                    <article class="media">
+                        <div class="media-left">
+                            <figure class="image is-50x50">
+                                <img src="/static/images/temperature.jpg" alt="my plot">
+                            </figure>
                         </div>
-
-
-                    </div>
-</div>
-         </div>
-    </section>
-        <section class="section">
-        <div class="container">
-            <div class="columns">
-                <div class="column is-offset-4 is-4">
-                    <form method="POST">
-                        <div class="field has-addons">
-                            <div class="control is-expanded">
-                                <input class="input" name="new_airport" type="text" placeholder="Airport ICAO code">
-                            </div>
-                            <div class="control">
-                                <button class="button is-info">
-                                    Add Airport
-                                </button>
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <span class="title">Temperature</span>
+                                    <br>
+                                    <span class="subtitle">{{ weather_data['temperature:'] }} C</span>
+                                </p>
                             </div>
                         </div>
-                    </form>
+                    </article>
                 </div>
+            </div>
+            <div class="column">
+                <div class="box">
+                    <article class="media">
+                        <div class="media-left">
+                            <figure class="image is-50x50">
+                                <img src="/static/images/airport-sign.png" alt="my plot">
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <span class="title">Conditions</span>
+                                    <br>
+                                    <span class="subtitle">{{ weather_data['conditions:'] }}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="column">
+                <div class="box">
+                    <article class="media">
+                        <div class="media-left">
+                            <figure class="image is-50x50">
+                                <img src="/static/images/barometer.png" alt="my plot">
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <span class="title">Pressure</span>
+                                    <br>
+                                    <span class="subtitle">{{ weather_data['pressure:'] }} hPa</span>
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
             </div>
         </div>
-    </section>
 
 
-    <footer class="footer">
-    </footer>
+    </div>
+
+</section> <!-- 3boxes with info-->
+
+
+<section class="section"> <!-- ceiling and wind-->
+    <div class="container">
+        <div class="columns is-2">
+            <div class="column">
+                <div class="box">
+                    <article class="media">
+                        <div class="media-left">
+                            <figure class="image">
+                                <img src="{{ ceiling_image }}" alt="my plot">
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <span class="title">Ceiling level:</span>
+                                    <br>
+                                    <span class="subtitle">{{ weather_data['ceiling_level:'] }} metres</span>
+                                    <br>
+                                    <br>
+                                    <span class="title">Ceiling type:</span>
+                                    <br>
+                                    <span class="subtitle">{{ weather_data['ceiling:'] }}</span>
+                                    <br>
+                                    <br>
+                                    <span class="title">Clouds level:</span>
+                                    <br>
+                                    <span class="subtitle">{{ weather_data['clouds1_level:'] }} metres</span>
+                                    <br>
+                                    <br>
+                                    <span class="title">Clouds type:</span>
+                                    <br>
+                                    <span class="subtitle">{{ weather_data['clouds1:'] }}</span>
+                                    <br>
+
+
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="column">
+                <div class="box">
+                    <article class="media">
+                        <div class="media-left">
+                            <figure class="image is-50x50">
+                                <img src="/static/images/arrow2.png" alt="my plot"
+                                     style="transform:rotate({{ weather_data['wind_degrees:'] }}deg);">
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <span class="title">Wind:</span>
+                                    <br>
+                                    <span class="subtitle">Wind direction: {{ weather_data['wind_degrees:'] }}</span>
+
+                                    <br>
+                                    <span class="subtitle">Wind speed: {{ weather_data['wind_speed:'] }}</span>
+
+                                    <br>
+                                    <br>
+                                    <span class="title">Other parameters:</span>
+                                    <br>
+                                    <span class="subtitle">Visibility: {{ weather_data['visibility:'] }}</span>
+                                    <br>
+                                    <span class="subtitle">Dewpoint: {{ weather_data['dewpoint:'] }}</span>
+                                    <br>
+                                    <span class="subtitle">Humidity: {{ weather_data['humidity:'] }}</span>
+                                    <br>
+
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<section class="section"> <!-- 2 lat wykresy-->
+
+    <div class="container">
+        <div class="columns">
+            <div class="column">
+                <div class="box">
+                    <article class="media">
+                        <div class="media">
+                            <figure class="image">
+                                <img src="{{ custom_plot1 }}" alt="my plot">
+                            </figure>
+                        </div>
+                    </article>
+                    <form method="POST">
+                        <div class="field">
+
+                            <div class="select">
+
+
+                                <select name="airport2" id="airport2">
+
+                                    <script language="javascript" type="text/javascript">
+
+                                        var airports = {{ airports|tojson  }};
+                                        var arrayLength = airports.length;
+
+                                        for (var i = 0; i < arrayLength; i++) {
+                                            document.write("<option>" + airports[i] + "</option>");
+                                        }
+                                    </script>
+                                </select>
+
+                            </div>
+                            <br>
+                            <br>
+
+                            <div class="control">
+                                <label>
+                                    <input class="input is-info" type="text" placeholder="YYYY-MM-DD" name="day1">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-info" type="text" placeholder="HH:MM start" name="time1_start">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-info" type="text" placeholder="HH:MM end" name="time1_end">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-info" type="text" placeholder="Parameter" name="parameter1">
+                            </div>
+                        </div>
+                        <input class="button" type="submit" value="Show data">
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-offset-4 is-4">
+                <form method="POST">
+                    <div class="field has-addons">
+                        <div class="control is-expanded">
+                            <input class="input" name="new_airport" type="text" placeholder="Airport ICAO code">
+                        </div>
+                        <div class="control">
+                            <button class="button is-info">
+                                Add Airport
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<footer class="footer">
+</footer>
 </body>
 
 </html>

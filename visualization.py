@@ -1,4 +1,3 @@
-
 import glob
 import os
 from random import random
@@ -9,29 +8,28 @@ import matplotlib.pyplot as plt
 from matplotlib.dates import DateFormatter
 
 
-
-
 def draw_ceiling_clouds(data, time):
     data_ceiling = data
+
     if time:
-        luj = pd.Index(data_ceiling['datetime:']).get_loc(time)
-    else:
-        luj = -1
+        data_ceiling = data[(data.index <= time)]
+
     for file in glob.glob('static/images/*ceiling.png'):
         os.remove(file)
+
     t = ['']
     s = [1000]
     plt.figure(figsize=(3.5, 5))
     plt.plot(t, s)
     plt.axhline(y=0, linewidth=0, color='#d62728')
-    plt.axhline(y=data_ceiling['ceiling_level:'][luj], linewidth=2, color='#d62728')
-    plt.text(0, data_ceiling['ceiling_level:'][luj] + 1, data_ceiling['ceiling:'][luj], fontsize=12)
-    plt.text(0, data_ceiling['ceiling_level:'][luj] - 45, 'Ceiling: ' + str(data_ceiling['ceiling_level:'][luj]),
+    plt.axhline(y=data_ceiling['ceiling_level:'][-1], linewidth=2, color='#d62728')
+    plt.text(0, data_ceiling['ceiling_level:'][-1] + 1, data_ceiling['ceiling:'][-1], fontsize=12)
+    plt.text(0, data_ceiling['ceiling_level:'][-1] - 45, 'Ceiling: ' + str(data_ceiling['ceiling_level:'][-1]),
              fontsize=12)
-    if data_ceiling['ceiling_level:'][luj] != data_ceiling['clouds1_level:'][luj]:
-        plt.axhline(y=data_ceiling['clouds1_level:'][luj], linewidth=2, color='#d62728')
-        plt.text(0, data_ceiling['clouds1_level:'][luj] + 1, data_ceiling['clouds1:'][luj], fontsize=12)
-        plt.text(0, data_ceiling['clouds1_level:'][luj] - 45, 'Clouds:' + str(data_ceiling['clouds1_level:'][luj]),
+    if data_ceiling['ceiling_level:'][-1] != data_ceiling['clouds1_level:'][-1]:
+        plt.axhline(y=data_ceiling['clouds1_level:'][-1], linewidth=2, color='#d62728')
+        plt.text(0, data_ceiling['clouds1_level:'][-1] + 1, data_ceiling['clouds1:'][-1], fontsize=12)
+        plt.text(0, data_ceiling['clouds1_level:'][-1] - 45, 'Clouds:' + str(data_ceiling['clouds1_level:'][-1]),
                  fontsize=12)
     plt.subplots_adjust(top=1, bottom=0, hspace=0, wspace=0)
     image_name = "static/images/{}ceiling.png".format(random())
@@ -40,7 +38,7 @@ def draw_ceiling_clouds(data, time):
     return image_name
 
 
-def mydraw(data, measure, start_time, end_time):
+def custom_plot(data, measure, start_time, end_time):
     data_custom = data
     for file in glob.glob('static/images/*custom_plot1.png'):
         os.remove(file)
@@ -54,7 +52,7 @@ def mydraw(data, measure, start_time, end_time):
     plt.plot(data_custom[measure])
     plt.xticks(rotation=30)
 
-    image_name = "static/images/{}custom_plot1.png".format(random())  # could be a uuid instead of datetime
+    image_name = "static/images/{}custom_plot1.png".format(random())
     saver_resizer(image_name, 40)
     return image_name
 

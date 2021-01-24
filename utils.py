@@ -17,8 +17,8 @@ def json_default():
 
 def data_load(icao_code):
     """Load data from .json file and preprocess."""
-    with open('/home/paszko/PycharmProjects/flaskProject/' + str(icao_code) + '.json') as f:
-        data = pd.DataFrame(json.load(f)['airport_info'])
+    with open('/home/paszko/PycharmProjects/flaskProject/data/' + str(icao_code) + '.json') as f:
+        data = pd.DataFrame(json.load(f))
     data = data.drop_duplicates(subset="datetime:", keep='first')
     data.index = pd.to_datetime(data['datetime:'], )
     weather_data = data
